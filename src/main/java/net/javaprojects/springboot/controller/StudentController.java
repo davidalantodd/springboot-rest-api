@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("students") //will provide base URL of "students" for all routes
 public class StudentController {
 
     // http://localhost:8080/student
@@ -29,7 +30,7 @@ public class StudentController {
     }
 
     // http://localhost:8080/students
-    @GetMapping("students")
+    @GetMapping
     public ResponseEntity<List<Student>> getStudents(){
         List<Student> students = new ArrayList<>();
         students.add(new Student(1, "David", "Todd"));
@@ -42,7 +43,7 @@ public class StudentController {
     // Spring Boot REST API with Path Variable
     //{id} - URI template variable
     // http://localhost:8080/students/1/david/todd
-    @GetMapping("students/{id}/{first-name}/{last-name}")
+    @GetMapping("{id}/{first-name}/{last-name}")
     public ResponseEntity<Student> studentPathVariable(@PathVariable("id") int studentId, @PathVariable("first-name") String firstName, @PathVariable("last-name") String lastName){
         //@PathVariable notation will bind argument to value of URL template variable
         Student student = new Student(studentId, firstName, lastName);
@@ -52,7 +53,7 @@ public class StudentController {
     // Spring Boot REST API with Request Param
     // to incorporate query parameters
     // http://localhost:8080/students/query?id=1&firstName=David&lastName=Todd
-    @GetMapping("students/query")
+    @GetMapping("query")
     public ResponseEntity<Student> studentRequestVariable(@RequestParam int id, @RequestParam String firstName, @RequestParam String lastName){
         Student student = new Student(id, firstName, lastName);
         return ResponseEntity.ok(student);
@@ -60,7 +61,7 @@ public class StudentController {
 
     // Spring Boot REST API that handles HTTP Post Request - create new resource
     // @PostMapping and @RequestBody
-    @PostMapping("students/create") //map this to a HTTP Post request
+    @PostMapping("create") //map this to a HTTP Post request
 //    @ResponseStatus(HttpStatus.CREATED) can use to send back the 201 status instead of 200
     public ResponseEntity<Student> createStudent(@RequestBody Student student){
         //@RequestBody will get the HTTP request body (JSON) and convert it to Java object
@@ -71,7 +72,7 @@ public class StudentController {
     }
 
     //Spring Boot REST API that handles HTTP PUT request - update existing resource
-    @PutMapping("students/{id}/update")
+    @PutMapping("{id}/update")
     public ResponseEntity<Student> updateStudent(@RequestBody Student student, @PathVariable("id") int studentId){
         System.out.println(student.getFirstName());
         System.out.println(student.getLastName());
@@ -79,7 +80,7 @@ public class StudentController {
     }
 
     //Spring Boot REST API that handles HTTP DELETE request - delete existing resource
-    @DeleteMapping("students/{id}/delete")
+    @DeleteMapping("{id}/delete")
     public ResponseEntity<String> deleteStudent(@PathVariable("id") int studentId){
         System.out.println(studentId);
         return ResponseEntity.ok("Student deleted successfully");
