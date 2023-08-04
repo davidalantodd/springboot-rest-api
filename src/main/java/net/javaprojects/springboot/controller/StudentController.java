@@ -50,7 +50,7 @@ public class StudentController {
         return new Student(id, firstName, lastName);
     }
 
-    // Spring Boot REST API that handles HTTP Post Request
+    // Spring Boot REST API that handles HTTP Post Request - create new resource
     // @PostMapping and @RequestBody
     @PostMapping("students/create") //map this to a HTTP Post request
     @ResponseStatus(HttpStatus.CREATED) //send back the 201 status instead of 200
@@ -61,4 +61,13 @@ public class StudentController {
         System.out.println(student.getLastName());
         return student;
     }
+
+    //Spring Boot REST API that handles HTTP PUT request - update existing resource
+    @PutMapping("students/{id}/update")
+    public Student updateStudent(@RequestBody Student student, @PathVariable("id") int studentId){
+        System.out.println(student.getFirstName());
+        System.out.println(student.getLastName());
+        return student;
+    }
+
 }
