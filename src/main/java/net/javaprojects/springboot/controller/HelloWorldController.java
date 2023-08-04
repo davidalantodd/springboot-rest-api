@@ -16,6 +16,6 @@ public class HelloWorldController {
 
     @GetMapping("/hello-world") // we use this to mat HTTP GET request onto specific handler method
     public String helloWorld(){
-        return "Hel lo World!";
+        return "Hello World!";
     }
 }
